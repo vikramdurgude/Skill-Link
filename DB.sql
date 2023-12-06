@@ -6,7 +6,7 @@ CREATE TABLE Users (
     UserID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(50) UNIQUE NOT NULL,
     Password VARCHAR(100) NOT NULL,
-    Email VARCHAR(100) UNIQUE NOT NULL
+    Email VARCHAR(100) UNIQUE 
     -- Other user profile details
 );
 
@@ -16,15 +16,17 @@ CREATE TABLE JobListings (
     Description TEXT,
     RequiredSkills TEXT,
     Location VARCHAR(100),
-    Employer VARCHAR(100),
     Deadline DATE
     -- Other job-related details
 );
 
-CREATE TABLE Skills (
-    SkillID INT PRIMARY KEY AUTO_INCREMENT,
-    SkillName VARCHAR(50) UNIQUE NOT NULL
+CREATE TABLE skills (
+    UserID INT,
+    SkillName VARCHAR(50) NOT NULL,
+    PRIMARY KEY (UserID,SkillName),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
+
 
 CREATE TABLE Applications (
     ApplicationID INT PRIMARY KEY AUTO_INCREMENT,
@@ -78,24 +80,6 @@ CREATE TABLE SavedJobs (
     FOREIGN KEY (JobID) REFERENCES JobListings(JobID)
 );
 
-CREATE TABLE Education (
-    EducationID INT PRIMARY KEY AUTO_INCREMENT,
-    UserID INT,
-    Degree VARCHAR(100),
-    Institution VARCHAR(100),
-    GraduationDate DATE,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
-
-CREATE TABLE Certifications (
-    CertificationID INT PRIMARY KEY AUTO_INCREMENT,
-    UserID INT,
-    CertificationName VARCHAR(100),
-    IssuingOrganization VARCHAR(100),
-    ExpirationDate DATE,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
-
 CREATE TABLE SalaryInfo (
     JobID INT PRIMARY KEY,
     MinimumSalary DECIMAL(10,2),
@@ -111,14 +95,14 @@ VALUES ('JohnDoe', 'password123', 'john@example.com'),
        ('JaneSmith', 'pass456', 'jane@example.com');
 
 -- JobListings
-INSERT INTO JobListings (Title, Description, RequiredSkills, Location, Employer, Deadline)
-VALUES ('Customer Support Representative', 'Handle customer inquiries via phone and email', 'Communication', 'CityA', 'CompanyX', '2023-12-10'),
-       ('Software Developer', 'Develop and maintain software applications', 'IT & Software, Problem Solving', 'CityB', 'Tech CompanyY', '2023-12-15');
+INSERT INTO JobListings (Title, Description, RequiredSkills, Location, Deadline)
+VALUES ('Customer Support Representative', 'Handle customer inquiries via phone and email', 'Communication', 'CityA', '2023-12-10'),
+       ('Software Developer', 'Develop and maintain software applications', 'IT & Software, Problem Solving', 'CityB', '2023-12-15');
 
 -- Skills
-INSERT INTO Skills (SkillName)
-VALUES ('Communication'),
-       ('Problem Solving');
+-- INSERT INTO Skills (SkillName)
+-- VALUES ('Communication'),
+--        ('Problem Solving');
 
 -- Applications
 INSERT INTO Applications (UserID, JobID, Status, DateApplied)
@@ -149,16 +133,6 @@ VALUES (1, 1),
 INSERT INTO SavedJobs (UserID, JobID)
 VALUES (1, 2),
        (2, 1);
-
--- Education
-INSERT INTO Education (UserID, Degree, Institution, GraduationDate)
-VALUES (1, 'Bachelor of Science', 'University A', '2023-06-01'),
-       (2, 'Master of Engineering', 'College B', '2022-12-15');
-
--- Certifications
-INSERT INTO Certifications (UserID, CertificationName, IssuingOrganization, ExpirationDate)
-VALUES (1, 'Project Management Professional (PMP)', 'PMI', '2025-03-01'),
-       (2, 'Cisco Certified Network Associate (CCNA)', 'Cisco', '2024-08-20');
 
 -- SalaryInfo
 INSERT INTO SalaryInfo (JobID, MinimumSalary, MaximumSalary, PaymentFrequency)
