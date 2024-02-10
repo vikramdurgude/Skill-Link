@@ -21,8 +21,9 @@ public class UserRequirementsController {
 	@Autowired
 	private UserRequirementsService userrequirement;
 	
-	@PostMapping("/userrequirements")
+	@PostMapping("/insert")
 	public ResponseEntity<?> insertUserRequirement(@RequestBody UserRequirements u){
+		
 		userrequirement.addnewuserrequirement(u);
 		return ResponseEntity.ok("data added successfully");
 		
