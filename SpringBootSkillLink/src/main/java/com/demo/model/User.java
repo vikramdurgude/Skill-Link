@@ -1,60 +1,85 @@
 package com.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="usertab")
+@Table(name="users")
 public class User {
 	@Id
-	private int UserId;
-	private String FirstName;
-	private String LastName;
-	private String PhoneNumber;
-	private String Wages;
+	@GeneratedValue(strategy =GenerationType.IDENTITY)
+	private int Userid;
+	
+	private String Namefirst;
+	private String Namelast;
+	
+	@Column(name="Username",unique=true )
+
+	private String Username;
+	@Column(name="Password" )
+	private String Password;
+	private String Phonenumber;
 	private String Address;
 	public User() {
 		super();
 	}
-	public User(int userId, String firstName, String lastName, String phoneNumber, String wages, String address) {
+	
+	public User(String username, String password) {
 		super();
-		UserId = userId;
-		FirstName = firstName;
-		LastName = lastName;
-		PhoneNumber = phoneNumber;
-		Wages = wages;
+		Username = username;
+		Password = password;
+	}
+
+	public User( String nameFirst, String nameLast, String username, String password, String phoneNumber,
+			String address) {
+		super();
+		Namefirst = nameFirst;
+		Namefirst = nameLast;
+		Username = username;
+		Password = password;
+		Phonenumber = phoneNumber;
 		Address = address;
 	}
 	public int getUserId() {
-		return UserId;
+		return Userid;
 	}
 	public void setUserId(int userId) {
-		UserId = userId;
+		Userid = userId;
 	}
-	public String getFirstName() {
-		return FirstName;
+	public String getNameFirst() {
+		return Namefirst;
 	}
-	public void setFirstName(String firstName) {
-		FirstName = firstName;
+	public void setNameFirst(String nameFirst) {
+		Namefirst = nameFirst;
 	}
-	public String getLastName() {
-		return LastName;
+	public String getNameLast() {
+		return Namefirst;
 	}
-	public void setLastName(String lastName) {
-		LastName = lastName;
+	public void setNameLast(String nameLast) {
+		Namefirst = nameLast;
+	}
+	public String getUsername() {
+		return Username;
+	}
+	public void setUsername(String username) {
+		Username = username;
+	}
+	public String getPassword() {
+		return Password;
+	}
+	public void setPassword(String password) {
+		Password = password;
 	}
 	public String getPhoneNumber() {
-		return PhoneNumber;
+		return Phonenumber;
 	}
 	public void setPhoneNumber(String phoneNumber) {
-		PhoneNumber = phoneNumber;
-	}
-	public String getWages() {
-		return Wages;
-	}
-	public void setWages(String wages) {
-		Wages = wages;
+		Phonenumber = phoneNumber;
 	}
 	public String getAddress() {
 		return Address;
@@ -64,8 +89,9 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [UserId=" + UserId + ", FirstName=" + FirstName + ", LastName=" + LastName + ", PhoneNumber="
-				+ PhoneNumber + ", Wages=" + Wages + ", Address=" + Address + "]";
+		return "User [UserId=" + Userid + ", NameFirst=" + Namefirst + ", NameLast=" + Namefirst + ", Username="
+				+ Username + ", Password=" + Password + ", PhoneNumber=" + Phonenumber + ", Address=" + Address + "]";
 	}
+	
 	
 }
