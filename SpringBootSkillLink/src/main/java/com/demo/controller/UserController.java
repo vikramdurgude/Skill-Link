@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.model.User;
 import com.demo.service.UserService;
 
+<<<<<<< HEAD
+//@RequestMapping("/")
+=======
 //@RequestMapping("/skilllink")
+>>>>>>> dfdf6db34fb215cb76f90e226ff3115e6571e358
 @RestController
 @CrossOrigin
 public class UserController {
