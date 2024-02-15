@@ -15,7 +15,7 @@ public class ServiceProvider {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
-	private int ServiceProviderID;
+	private int Serviceproviderid;
 	private String Namefirst;
 	private String Namelast;
 	private String Username;
@@ -41,13 +41,26 @@ public class ServiceProvider {
 		Address = address;
 	}
 	
+	public ServiceProvider(int serviceproviderid, String namefirst, String namelast, String username, String password,
+			String phonenumber, String skills, String wages, String address) {
+		super();
+		Serviceproviderid = serviceproviderid;
+		Namefirst = namefirst;
+		Namelast = namelast;
+		Username = username;
+		Password = password;
+		Phonenumber = phonenumber;
+		Skills = skills;
+		Wages = wages;
+		Address = address;
+	}
 	public ServiceProvider(String username, String password) {
 		super();
 		Username = username;
 		Password = password;
 	}
 	public int getServiceProviderID() {
-		return ServiceProviderID;
+		return Serviceproviderid;
 	}
 	public String getNamefirst() {
 		return Namefirst;
@@ -99,7 +112,7 @@ public class ServiceProvider {
 	}
 	@Override
 	public String toString() {
-		return "ServiceProvider [ServiceProviderID=" + ServiceProviderID + ", Namefirst=" + Namefirst + ", Namelast="
+		return "ServiceProvider [ServiceProviderID=" + Serviceproviderid + ", Namefirst=" + Namefirst + ", Namelast="
 				+ Namelast + ", Username=" + Username + ", Password=" + Password + ", Phonenumber=" + Phonenumber
 				+ ", Skills=" + Skills + ", Wages=" + Wages + ", Address=" + Address + "]";
 	}

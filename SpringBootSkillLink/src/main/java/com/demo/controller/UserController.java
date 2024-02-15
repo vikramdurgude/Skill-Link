@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.model.User;
+import com.demo.model.UserRequirement;
+import com.demo.service.UserRequirementService;
 import com.demo.service.UserService;
 
-<<<<<<< HEAD
-//@RequestMapping("/")
-=======
-//@RequestMapping("/skilllink")
->>>>>>> dfdf6db34fb215cb76f90e226ff3115e6571e358
+@RequestMapping("/skilllink")
 @RestController
 @CrossOrigin
 public class UserController {
@@ -30,36 +28,35 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
+	@Autowired
+	private UserRequirementService userRequire;
+	
 	
 	@PostMapping("/registration")
 	public ResponseEntity<?> adduser(@RequestBody User u){
+		System.out.println(u.toString());
 			User ul =userservice.adduser(u);
-		
+			
 			if(ul==null) {
 				return ResponseEntity.ok("fail");
 			}
 			return ResponseEntity.ok("success");
-	
-	
 	}
 	
-	
-
-	
-	
 	@PostMapping("/login")
-	public ResponseEntity<String> validate(@RequestBody User u){
+	public ResponseEntity<?> validate(@RequestBody User u){
 		
 		//System.out.println(u.getPassword());
 		User login=userservice.validate(u.getUsername(),u.getPassword());
 		
 		if(login!=null) {
+			System.out.println(login.toString());
 			System.out.println("success");
-			return ResponseEntity.ok("success");
+			return ResponseEntity.ok(login);
 			
 		}
 		
-		return ResponseEntity.ok("unsuccess");
+		return ResponseEntity.noContent().build();
 		
 	}
 	@GetMapping("/getall")
@@ -71,17 +68,14 @@ public class UserController {
 		return ResponseEntity.ok(ulist);
 	}
 	
-//	@PostMapping("/reset")
-//	public ResponseEntity<String> changePassword(@RequestBody User u){
-//		System.out.println(u);
-//		boolean status=userservice.changePassword(u);
-//		
-//		if(status)
-//			return ResponseEntity.ok("success");
-//		
-//		return ResponseEntity.ok("User not found");
-//	}
+	@PostMapping("/insertUserRequirement")
+	public ResponseEntity<?> insertUserRequirement(@RequestBody UserRequirement u){
+		System.out.println(u.toString());
+		userRequire.addUserRequirement(u);		
+		return ResponseEntity.ok("data added successfully");
+	}
 	
+
 	
 	
 	
