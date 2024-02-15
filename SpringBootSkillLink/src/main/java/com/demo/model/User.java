@@ -1,10 +1,14 @@
 package com.demo.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -25,43 +29,51 @@ public class User {
 	private String Password;
 	private String Phonenumber;
 	private String Address;
+	
+	
+
 	public User() {
 		super();
 	}
-	
 	public User(String username, String password) {
 		super();
 		Username = username;
 		Password = password;
 	}
-
-	public User( String nameFirst, String nameLast, String username, String password, String phoneNumber,
+	
+	public User(int userid) {
+		super();
+		Userid = userid;
+	}
+	
+	
+	public User(String namefirst, String namelast, String username, String password, String phonenumber,
 			String address) {
 		super();
-		Namefirst = nameFirst;
-		Namefirst = nameLast;
+		Namefirst = namefirst;
+		Namelast = namelast;
 		Username = username;
 		Password = password;
-		Phonenumber = phoneNumber;
+		Phonenumber = phonenumber;
 		Address = address;
 	}
-	public int getUserId() {
+	public int getUserid() {
 		return Userid;
 	}
-	public void setUserId(int userId) {
-		Userid = userId;
+	public void setUserid(int userid) {
+		Userid = userid;
 	}
-	public String getNameFirst() {
+	public String getNamefirst() {
 		return Namefirst;
 	}
-	public void setNameFirst(String nameFirst) {
-		Namefirst = nameFirst;
+	public void setNamefirst(String namefirst) {
+		Namefirst = namefirst;
 	}
-	public String getNameLast() {
-		return Namefirst;
+	public String getNamelast() {
+		return Namelast;
 	}
-	public void setNameLast(String nameLast) {
-		Namefirst = nameLast;
+	public void setNamelast(String namelast) {
+		Namelast = namelast;
 	}
 	public String getUsername() {
 		return Username;
@@ -75,11 +87,11 @@ public class User {
 	public void setPassword(String password) {
 		Password = password;
 	}
-	public String getPhoneNumber() {
+	public String getPhonenumber() {
 		return Phonenumber;
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		Phonenumber = phoneNumber;
+	public void setPhonenumber(String phonenumber) {
+		Phonenumber = phonenumber;
 	}
 	public String getAddress() {
 		return Address;
@@ -89,9 +101,13 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [UserId=" + Userid + ", NameFirst=" + Namefirst + ", NameLast=" + Namefirst + ", Username="
-				+ Username + ", Password=" + Password + ", PhoneNumber=" + Phonenumber + ", Address=" + Address + "]";
+		return "User [Userid=" + Userid + ", Namefirst=" + Namefirst + ", Namelast=" + Namelast + ", Username="
+				+ Username + ", Password=" + Password + ", Phonenumber=" + Phonenumber + ", Address=" + Address  + "]";
 	}
+	
+	
+
+	
 	
 	
 }
