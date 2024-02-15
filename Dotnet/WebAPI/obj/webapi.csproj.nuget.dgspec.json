@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell\\Desktop\\SkillLink\\Skill-Link\\Dotnet\\WebAPI\\webapi.csproj": {}
+    "C:\\Users\\user\\OneDrive\\Desktop\\React Dotnet\\WebAPI\\webapi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell\\Desktop\\SkillLink\\Skill-Link\\Dotnet\\WebAPI\\webapi.csproj": {
+    "C:\\Users\\user\\OneDrive\\Desktop\\React Dotnet\\WebAPI\\webapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell\\Desktop\\SkillLink\\Skill-Link\\Dotnet\\WebAPI\\webapi.csproj",
+        "projectUniqueName": "C:\\Users\\user\\OneDrive\\Desktop\\React Dotnet\\WebAPI\\webapi.csproj",
         "projectName": "webapi",
-        "projectPath": "C:\\Users\\Dell\\Desktop\\SkillLink\\Skill-Link\\Dotnet\\WebAPI\\webapi.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell\\Desktop\\SkillLink\\Skill-Link\\Dotnet\\WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\user\\OneDrive\\Desktop\\React Dotnet\\WebAPI\\webapi.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\OneDrive\\Desktop\\React Dotnet\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -41,6 +41,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "MySql.Data": {
               "target": "Package",
