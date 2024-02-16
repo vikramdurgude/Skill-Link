@@ -9,10 +9,9 @@ public class User{
     public string Address{get;set;}
    
     
-     public User(){
+    public User(){
         Console.WriteLine("Default constructor");
     }
-    
     public User(string namefirst,string namelast,string username,string password,string phonenumber, string address){
         this.NameFirst=namefirst;
         this.NameLast=namelast;

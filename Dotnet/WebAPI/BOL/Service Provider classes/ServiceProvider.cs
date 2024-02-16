@@ -16,13 +16,15 @@ namespace BOL
         public string Address { get; set; }
 
         // Constructors
-        public ServiceProvider() { }
+        public ServiceProvider() { 
 
-        public ServiceProvider(string username, string password)
-        {
-            Username = username;
-            Password = password;
         }
+
+        // public ServiceProvider(string username, string password)
+        // {
+        //     Username = username;
+        //     Password = password;
+        // }
 
         public ServiceProvider(int serviceProviderID, string nameFirst, string nameLast, string username, string password, string phoneNumber, string skills, string wages, string address)
         {

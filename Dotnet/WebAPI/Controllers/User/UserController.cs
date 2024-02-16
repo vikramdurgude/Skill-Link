@@ -21,20 +21,23 @@ public class User : Controller{
     Password:
     */
     [HttpPost("login")] 
-    public IActionResult userlogin([FromForm] String Username,[FromForm] String Password){
+    public IActionResult userlogin([FromForm] string Username, [FromForm] string Password){
         Console.WriteLine("User login");
 
         // dotnet add package Microsoft.AspNetCore.Session
-       
+
         BOL.User userExists = UserManager.ValidateUser(Username, Password);
-        if (userExists!=null){
+        if (userExists != null)
+        {
             HttpContext.Session.SetInt32("UserID", userExists.UserID);
-            return Ok(new { message = "Login successful" });
+            return Ok(new { message = "Login successful", user = userExists });
         }
-        else{
+        else
+        {
             return Unauthorized(new { message = "Invalid Credentials" });
         }
     }
+
     /* http://localhost:5020/api/User/register
     {
     "NameFirst": "bhupesh",
@@ -46,8 +49,9 @@ public class User : Controller{
     }
 
     */
-    [HttpPost("register")]
+    [HttpPost("registration")]
     public IActionResult RegisterUser([FromBody] BOL.User userData){
+        
         bool registrationSuccess = UserManager.RegisterUser(userData);
         if (registrationSuccess)
         {
@@ -60,13 +64,15 @@ public class User : Controller{
     }
 
     [HttpPost("adduserrequirement")]
-    public ActionResult AddUserRequirement([FromForm] string skills,[FromForm] string wages,[FromForm] string address,[FromForm] string date){
+    public ActionResult AddUserRequirement([FromForm]int userID,[FromForm] string skills,[FromForm] string wages,[FromForm] string address,[FromForm] string date){
             // Retrieve the user ID from session
-            int? userId = HttpContext.Session.GetInt32("UserID");
-            // int? userId=7;
-
+            Console.WriteLine("userID====>"+ userID);
+           
+            
+        /*int? userId = HttpContext.Session.GetInt32("UserID"); 
         if (userId.HasValue){
             // Call BLL method to add user requirement
+            Console.WriteLine("in user requirement"+" userId: "+userId.Value );
             int insertedId = UserManager.AddUserRequirement(userId.Value, skills, wages, address, date);
             // You can handle further logic or return a response as needed
             return Ok(new { message = "User requirement added successfully", insertedId });
@@ -74,6 +80,18 @@ public class User : Controller{
         else{
             // Handle case where user is not logged in or session expired
             Console.WriteLine(userId);
+            return Unauthorized(new { message = "User not logged in" });
+        }*/
+
+        if (userID > 0){
+            // Call BLL method to add user requirement
+           
+            int insertedId = UserManager.AddUserRequirement(userID, skills, wages, address, date);
+            // You can handle further logic or return a response as needed
+            return Ok(new { message = "User requirement added successfully", insertedId });
+        }
+        else{
+            // Handle case where user is not logged in or session expired
             return Unauthorized(new { message = "User not logged in" });
         }
     }

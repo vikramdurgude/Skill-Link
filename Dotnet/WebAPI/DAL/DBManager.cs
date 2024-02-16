@@ -10,7 +10,6 @@ public class DBManager{
     
    public static User IsUserPresent(string username, string password)
         {
-            
             try
             {
                 
@@ -133,7 +132,7 @@ public class DBManager{
                 insertedId = Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
-
+        Console.WriteLine("user requirement inserted successfully");
         return insertedId;
     }
 
@@ -208,6 +207,7 @@ public class DBManager{
                                     Username = reader.GetString("UserName"),
                                     Password = reader.GetString("Password"),
                                     PhoneNumber = reader.GetString("PhoneNumber"),
+                                    Skills=reader.GetString("Skills"),
                                     Wages = reader.GetString("Wages"),
                                     Address = reader.GetString("Address")
                                 };
@@ -224,7 +224,7 @@ public class DBManager{
             }
             return null; 
         }
-    public static List<UserRequirementWithUserData> GetUserRequirementsWithUserInfo()
+    public static List<UserRequirementWithUserData> GetUserRequirementsWithUserInfo(string skills)
         {
             List<UserRequirementWithUserData> userRequirements = new List<UserRequirementWithUserData>();
 
@@ -234,13 +234,14 @@ public class DBManager{
                 {
                     conn.Open();
 
-                     string query = @"SELECT u.UserID,u.NameFirst, u.NameLast, u.PhoneNumber, ur.Skills, ur.Wages, ur.Address, ur.Date
+                     string query = @"SELECT DISTINCT u.UserID, u.NameFirst, u.NameLast, u.PhoneNumber, ur.Skills, ur.Wages, ur.Address, ur.Date
                                     FROM Users u
                                     INNER JOIN UserRequirements ur ON u.UserID = ur.UserID
                                     INNER JOIN ServiceProviders sp ON ur.Skills = sp.Skills
-                                    WHERE ur.Skills = sp.Skills";
+                                    WHERE ur.Skills = @skills;";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
+                         cmd.Parameters.AddWithValue("@skills", skills);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -328,13 +329,14 @@ public class DBManager{
                 {
                     conn.Open();
 
-                    string query = @"INSERT INTO BookingList (UserID, ServiceProviderID, NameFirst, NameLast, PhoneNumber, Skills, Wages) 
-                                    VALUES (@UserID, @ServiceProviderID, @NameFirst, @NameLast, @PhoneNumber, @Skills, @Wages)";
+                    string query = @"INSERT INTO BookingList (UserID,Username,NameFirst, NameLast, PhoneNumber, Skills, Wages) 
+                                    VALUES (@UserID,@Username, @NameFirst, @NameLast, @PhoneNumber, @Skills, @Wages)";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@UserID", userID);
-                        cmd.Parameters.AddWithValue("@ServiceProviderID", serviceProvider.ServiceProviderID);
+                        cmd.Parameters.AddWithValue("@Username", serviceProvider.Username);
+                        // cmd.Parameters.AddWithValue("@ServiceProviderID", serviceProvider.ServiceProviderID);
                         cmd.Parameters.AddWithValue("@NameFirst",serviceProvider.NameFirst);
                         cmd.Parameters.AddWithValue("@NameLast", serviceProvider.NameLast);
                         cmd.Parameters.AddWithValue("@PhoneNumber", serviceProvider.PhoneNumber);
@@ -342,6 +344,7 @@ public class DBManager{
                         cmd.Parameters.AddWithValue("@Wages",serviceProvider.Wages);
                         // cmd.Parameters.AddWithValue("@Ratings", serviceProvider.ratings);
                         int rowsAffected = cmd.ExecuteNonQuery();
+                        Console.WriteLine("Added into booking list");
                         return rowsAffected > 0;
                     }
                 }
@@ -355,6 +358,7 @@ public class DBManager{
         }
 
     public static List<BookingList> GetBookingListByUserId(int userId){
+        Console.WriteLine("in get booking list");
         List<BookingList> bookingLists = new List<BookingList>();
             try
             {
@@ -362,7 +366,7 @@ public class DBManager{
                 {
                     conn.Open();
 
-                    string query = @"SELECT bl.ServiceProviderID,NameFirst,NameLast,PhoneNumber,Skills,Wages,Ratings
+                    string query = @"SELECT UserID,Username,NameFirst,NameLast,PhoneNumber,Skills,Wages,Ratings
                                     FROM BookingList bl
                                     WHERE bl.UserID = @UserID";
 
@@ -376,7 +380,9 @@ public class DBManager{
                             {
                                 BookingList bookingList = new BookingList
                                 {
-                                    ServiceProviderID = reader.GetInt32("ServiceProviderID"),
+                                    // ServiceProviderID = reader.GetInt32("ServiceProviderID"),
+                                    UserID=reader.GetInt32("UserID"),
+                                    Username = reader.GetString("Username"),
                                     NameFirst = reader.GetString("NameFirst"),
                                     NameLast = reader.GetString("NameLast"),
                                     PhoneNumber = reader.GetString("PhoneNumber"),

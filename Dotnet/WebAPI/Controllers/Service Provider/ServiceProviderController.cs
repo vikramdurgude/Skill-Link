@@ -17,19 +17,19 @@ public class ServiceProvider : Controller{
 
      
     [HttpPost("login")] 
-    public IActionResult serviceproviderlogin([FromForm] String Username,[FromForm] String Password){
+    public IActionResult serviceproviderlogin([FromForm] string Username,[FromForm] string Password){
         Console.WriteLine("service provider login");
         BOL.ServiceProvider serviceProviderExists = ServiceProviderManager.ValidateServiceProvider(Username, Password);
         if (serviceProviderExists!=null){
             HttpContext.Session.SetInt32("ServiceProviderID", serviceProviderExists.ServiceProviderID);
-            return Ok(new { message = "Login successful" });
+            return Ok(new { message = "Login successful" ,serviceProviderExists=serviceProviderExists});
         }
         else{
             return Unauthorized(new { message = "Invalid credentials" });
         }
     }
 
-    [HttpPost("register")]
+    [HttpPost("registration")]
     public IActionResult RegisterServiceProvider([FromBody] BOL.ServiceProvider serviceProvider){
         if (serviceProvider == null){
             return BadRequest("Invalid request body");
@@ -46,13 +46,11 @@ public class ServiceProvider : Controller{
     }
 
     [HttpGet("userrequirements")]
-    public IActionResult GetUserRequirements(){
-        int? serviceProviderID = HttpContext.Session.GetInt32("ServiceProviderID");
-
-        if (serviceProviderID.HasValue){
+    public IActionResult GetUserRequirements(string skills){
+        Console.WriteLine("in get user requirement");
             try
             {
-                List<UserRequirementWithUserData> userRequirements = ServiceProviderManager.GetUserRequirements();
+                List<UserRequirementWithUserData> userRequirements = ServiceProviderManager.GetUserRequirements(skills);
                 return Ok(userRequirements);
             }
             catch (Exception ex)
@@ -61,13 +59,30 @@ public class ServiceProvider : Controller{
                 Console.WriteLine($"Error retrieving user requirements: {ex.Message}");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Failed to retrieve user requirements" });
             }
+        // int? serviceProviderID = HttpContext.Session.GetInt32("ServiceProviderID");
+
+        // if (serviceProviderID.HasValue){
+        //     try
+        //     {
+        //         List<UserRequirementWithUserData> userRequirements = ServiceProviderManager.GetUserRequirements(skills);
+        //         return Ok(userRequirements);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Log the exception
+        //         Console.WriteLine($"Error retrieving user requirements: {ex.Message}");
+        //         return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Failed to retrieve user requirements" });
+        //     }
+        // }
+        // else
+        // {
+        //     // Handle case where service provider is not logged in
+        //     return Unauthorized(new { message = "Service provider not logged in" });
+        // }
+     
         }
-        else
-        {
-            // Handle case where service provider is not logged in
-            return Unauthorized(new { message = "Service provider not logged in" });
-        }
-    }
+        
+    
 }
 
 

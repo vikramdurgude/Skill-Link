@@ -2,7 +2,7 @@ namespace BOL;
     public class BookingList
     {
         public int UserID { get; set; }
-        public int ServiceProviderID { get; set; }
+        public string Username{get;set;}
         public string NameFirst { get; set; }
         public string NameLast { get; set; }
         public string PhoneNumber { get; set; }
@@ -15,10 +15,10 @@ namespace BOL;
             // Default constructor
         }
 
-        public BookingList(int userId, int serviceProviderId, string firstName, string lastName, string phoneNumber, string skills, string wages, int ratings)
+        public BookingList(int userId,string username,string firstName, string lastName, string phoneNumber, string skills, string wages, int ratings)
         {
             UserID = userId;
-            ServiceProviderID = serviceProviderId;
+            Username=username;
             NameFirst = firstName;
             NameLast = lastName;
             PhoneNumber = phoneNumber;
@@ -26,5 +26,10 @@ namespace BOL;
             Wages = wages;
             Ratings = ratings;
         }
+        public override string ToString()
+        {
+            return $"UserID: {UserID}, Username: {Username}, NameFirst: {NameFirst}, NameLast: {NameLast}, PhoneNumber: {PhoneNumber}, Skills: {Skills}, Wages: {Wages}, Ratings: {Ratings}";
+        }
+
     }
 

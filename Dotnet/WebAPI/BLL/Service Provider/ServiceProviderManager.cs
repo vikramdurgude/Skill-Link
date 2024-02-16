@@ -12,8 +12,8 @@ public static class ServiceProviderManager{
         return DBManager.RegisterServiceProvider(serviceProvider);
     }
 
-    public static List<UserRequirementWithUserData> GetUserRequirements(){
-        return DBManager.GetUserRequirementsWithUserInfo();
+    public static List<UserRequirementWithUserData> GetUserRequirements(string skills){
+        return DBManager.GetUserRequirementsWithUserInfo(skills);
     }
     public static ServiceProvider GetServiceProviderById(int ServiceProviderID){
         return DBManager.GetServiceProviderByID(ServiceProviderID);
