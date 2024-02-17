@@ -11,5 +11,8 @@ public static class BookingListManager{
         return DBManager.GetBookingListByUserId(UserID);
     }
     
+    public static bool SelectServiceProvider(int UserID,string ServiceProviderUsername,bool IsSelected){
+        return DBManager.SelectServiceProvider(UserID,ServiceProviderUsername,IsSelected);
+    }
    
 }

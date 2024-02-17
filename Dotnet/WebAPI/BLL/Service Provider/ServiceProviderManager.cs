@@ -19,4 +19,7 @@ public static class ServiceProviderManager{
         return DBManager.GetServiceProviderByID(ServiceProviderID);
     }
 
+    public static List<ServiceProviderViewStatus> GetServiceProviderData(string serviceProviderUsername){
+        return DBManager.GetServiceProviderData(serviceProviderUsername);
+    }
 }

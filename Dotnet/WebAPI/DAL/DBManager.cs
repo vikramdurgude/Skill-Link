@@ -366,10 +366,16 @@ public class DBManager{
                 {
                     conn.Open();
 
-                    string query = @"SELECT UserID,Username,NameFirst,NameLast,PhoneNumber,Skills,Wages,Ratings
-                                    FROM BookingList bl
-                                    WHERE bl.UserID = @UserID";
-
+        string query = @" SELECT b1.UserID,b1.Username,b1.NameFirst, b1.NameLast,b1.PhoneNumber,b1.Skills,
+        b1.Wages,COALESCE(AVG(bl.Rating), 0) AS Rating     
+                FROM 
+                    BookingList b1
+                LEFT JOIN 
+                    Feedback bl ON b1.Username = bl.ServiceProviderUsername
+                WHERE 
+                    b1.UserID = @UserID
+                GROUP BY 
+                    b1.Username";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@UserID", userId);
@@ -388,7 +394,7 @@ public class DBManager{
                                     PhoneNumber = reader.GetString("PhoneNumber"),
                                     Skills = reader.GetString("Skills"),
                                     Wages = reader.GetString("Wages"),
-                                    // Ratings = reader.GetInt32("Ratings")
+                                    Rating = (float)reader.GetDouble("Rating")
                                 };
 
                                 bookingLists.Add(bookingList);
@@ -403,5 +409,97 @@ public class DBManager{
             }
 
             return bookingLists;
+        }
+
+    public static bool SelectServiceProvider(int userId, string serviceProviderUsername, bool isSelected){
+        using (MySqlConnection connection = new MySqlConnection(connString))
+        {
+            try
+            {
+                connection.Open();
+
+                string query = "INSERT INTO Status (UserID, ServiceProviderUserName, IsSelected) VALUES (@UserID, @ServiceProviderUserName, @IsSelected)";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@UserID", userId);
+                command.Parameters.AddWithValue("@ServiceProviderUserName", serviceProviderUsername);
+                command.Parameters.AddWithValue("@IsSelected", isSelected);
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error selecting service provider: " + ex.Message);
+                return false;
+            }
+            
+        }
+    }
+
+
+
+    public static List<ServiceProviderViewStatus> GetServiceProviderData(string serviceProviderUsername){
+            List<ServiceProviderViewStatus> serviceProviderDataList = new List<ServiceProviderViewStatus>();
+            using (MySqlConnection connection = new MySqlConnection(connString))
+            {
+                string query = @"SELECT distinct u.NameFirst, u.NameLast, u.PhoneNumber, ur.Wages, ur.Address, ur.Date
+                                 FROM users u
+                                 INNER JOIN userrequirements ur ON u.UserID = ur.UserID
+                                 INNER JOIN status st ON u.UserID = st.UserID
+                                 WHERE st.ServiceProviderUserName = @ServiceProviderUsername";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ServiceProviderUsername", serviceProviderUsername);
+                    connection.Open();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ServiceProviderViewStatus serviceProviderData = new ServiceProviderViewStatus
+                            {
+                                NameFirst = reader["NameFirst"].ToString(),
+                                NameLast = reader["NameLast"].ToString(),
+                                PhoneNumber = reader["PhoneNumber"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Wages = reader["Wages"].ToString(),
+                                Date = reader["Date"].ToString()
+                            };
+                            serviceProviderDataList.Add(serviceProviderData);
+                        }
+                    }
+                }
+            }
+            return serviceProviderDataList;
+        }
+
+
+
+        public static bool GiveFeedback(Feedback feedback)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connString))
+            {
+                string query = @"INSERT INTO Feedback (ServiceProviderUsername, FeedbackMessage, Rating) 
+                                 VALUES (@ServiceProviderUsername, @FeedbackMessage, @Rating)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ServiceProviderUsername", feedback.ServiceProviderUsername);
+                    command.Parameters.AddWithValue("@FeedbackMessage", feedback.FeedbackMessage);
+                    command.Parameters.AddWithValue("@Rating", feedback.Rating);
+
+                    try
+                    {
+                        connection.Open();
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the exception
+                        throw new Exception("Error giving feedback: " + ex.Message);
+                    }
+                }
+            }
         }
 }

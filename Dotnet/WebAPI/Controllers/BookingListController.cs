@@ -93,5 +93,24 @@ namespace WebAPI.Controllers;
         }
 
 
+
+
+        [HttpPost("user/bookServiceProvider")]
+        public IActionResult SelectServiceProvider([FromBody] SelectServiceProviderRequest request)
+        {
+            Console.WriteLine("You were booked: userid ==>" + request.UserID+" username==> "+ request.ServiceProviderUsername+" status==> " +request.IsSelected);
+            // Assuming you have a service to handle the selection logic
+            bool selectionSuccess = BookingListManager.SelectServiceProvider(request.UserID, request.ServiceProviderUsername,request.IsSelected);
+
+            if (selectionSuccess)
+            {
+                return Ok(new { message = "Service provider selected successfully" });
+            }
+            else
+            {
+                return BadRequest(new { message = "Failed to select service provider" });
+            }
+        }
+
     
     }

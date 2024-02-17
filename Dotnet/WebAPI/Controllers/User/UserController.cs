@@ -95,7 +95,11 @@ public class User : Controller{
             return Unauthorized(new { message = "User not logged in" });
         }
     }
-
+    [HttpPost("giveFeedback")]
+    public IActionResult GiveFeedback([FromBody] Feedback feedback){
+            UserManager.AddFeedback(feedback);
+            return Ok(new { message = "Feedback added successfully!" });
+    }
     
 
 }

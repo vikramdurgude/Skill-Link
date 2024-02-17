@@ -81,7 +81,19 @@ public class ServiceProvider : Controller{
         // }
      
         }
-        
+        [HttpGet("getStatus")]
+        public IActionResult GetServiceProviderData(string serviceProviderUsername)
+        {
+            List<ServiceProviderViewStatus> serviceProviderData = ServiceProviderManager.GetServiceProviderData(serviceProviderUsername);
+            if (serviceProviderData != null && serviceProviderData.Count > 0)
+            {
+                return Ok(serviceProviderData);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     
 }
 

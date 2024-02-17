@@ -40,23 +40,36 @@ CREATE TABLE UserRequirements (
 );
 
 CREATE TABLE Feedback (
-    SID INT,
-    Ratings DOUBLE
+    ServiceProviderUsername VARCHAR(50) NOT NULL,
+    FeedbackMessage TEXT NOT NULL,
+    Rating INT NOT NULL,
+	FOREIGN KEY (ServiceProviderUsername) REFERENCES ServiceProviders(Username)
 );
+
 
 CREATE TABLE BookingList (
     UserID INT,
    -- ServiceProviderID INT,--
-	Username VARCHAR(50),
+	Username VARCHAR(50) NOT NULL UNIQUE,
     NameFirst VARCHAR(50),
     NameLast VARCHAR(50),
     PhoneNumber VARCHAR(10),
 	Skills VARCHAR(50),
     Wages VARCHAR(50),
-    Ratings INT,
     -- FOREIGN KEY (ServiceProviderID) REFERENCES ServiceProviders(ServiceProviderID),--
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+	FOREIGN KEY (Username) REFERENCES ServiceProviders(Username)
 );
+
+CREATE TABLE Status (
+    UserID INT,
+	ServiceProviderUserName VARCHAR(50) NOT NULL UNIQUE,
+	IsSelected BOOLEAN,
+	FOREIGN KEY (ServiceProviderUsername) REFERENCES ServiceProviders(Username)
+);
+
+
+
 
 -- Inserting data into Users table with corrected phone numbers
 INSERT INTO Users (NameFirst, NameLast, Username, Password, PhoneNumber, Address) 
@@ -68,8 +81,8 @@ VALUES
 -- Inserting data into ServiceProviders table
 INSERT INTO ServiceProviders (NameFirst, NameLast, Username, Password, PhoneNumber,Skills, Wages, Address) 
 VALUES 
-('Alice', 'Johnson', 'alice_provider', 'providerpass', '5551234567','coder', '15/hr', '789 Oak St'),
-('Bob', 'Brown', 'bob_provider', 'providerpass123', '5559876543', 'web developer','20/hr', '321 Pine St');
+('Alice', 'Johnson', 'alice_johnson', 'providerpass', '5551234567','Cleaning', '15/hr', '789 Oak St'),
+('Bob', 'Brown', 'bob_brown', 'providerpass123', '5559876543', 'Gardening','20/hr', '321 Pine St');
 
 -- Inserting data into UserRequirements table
 INSERT INTO UserRequirements (UserID, Skills, Wages, Address, Date) 
@@ -77,14 +90,23 @@ VALUES
 (1, 'Cleaning', '15/hr', '123 Main St', '2024-02-12'),
 (2, 'Gardening', '20/hr', '456 Elm St', '2024-02-15');
 
--- Inserting data into Feedback table
-INSERT INTO Feedback (SID, Ratings) 
+
+
+-- Inserting data into Status table
+INSERT INTO Status(UserId,ServiceProviderUserName, IsSelected) 
 VALUES 
-(1, 4.5),
-(2, 4.0);
+(1,"alice_johnson",1),
+(2,"bob_brown",1);
 
 -- Inserting data into BookingList table
-INSERT INTO BookingList (UserID, Username,NameFirst, NameLast, PhoneNumber,Skills, Wages, Ratings) 
+INSERT INTO BookingList (UserID, Username,NameFirst, NameLast, PhoneNumber,Skills, Wages) 
 VALUES 
-(1,'alice_provider', 'Alice', 'Johnson', '5551234567','coder', '15/hr', 4),
-(2,'bob_provider' ,'Bob', 'Brown', '5559876543','web developer', '20/hr', 3);
+(1,'alice_johnson', 'Alice', 'Johnson', '5551234567','coder', '15/hr'),
+(2,'bob_brown' ,'Bob', 'Brown', '5559876543','web developer', '20/hr');
+
+
+-- Insert some dummy values into the Feedback table
+INSERT INTO Feedback (ServiceProviderUsername, FeedbackMessage, Rating)
+VALUES 
+('alice_johnson', 'Excellent service!', 5),
+('bob_brown', 'Good job overall.', 4);

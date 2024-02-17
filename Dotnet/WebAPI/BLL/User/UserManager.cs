@@ -15,4 +15,9 @@ public static class UserManager{
     {
         return DBManager.InsertUserRequirement(userId, skills, wages, address, date);
     }
+    public static bool AddFeedback(Feedback feedback)
+    {
+        return DBManager.GiveFeedback(feedback);
+    }
+
 }

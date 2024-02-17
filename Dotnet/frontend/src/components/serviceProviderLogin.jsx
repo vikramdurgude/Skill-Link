@@ -169,8 +169,7 @@ const handleSubmit = async (e) => {
                 alert("success")
                 navigate("/data")
             }else{
-                alert("Wrong Credential")
-                navigate("/registration")
+              setMessage("Invalid Credentials");
             }
         
            }   )
@@ -178,7 +177,7 @@ const handleSubmit = async (e) => {
         
         // setMessage(response.data); // Set the message received from the server
     } catch (error) {
-        console.error('Error:', error);
+       alert("Invalid credentials");
         setMessage('An error occurred. Please try again later.'); // Set a generic error message
     }
 };

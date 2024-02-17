@@ -61,21 +61,21 @@ const Registration = () => {
                 placeholder="First Name"
                 name="NameFirst"
                 value={formData.NameFirst}
-                onChange={handleChange}
+                onChange={handleChange} required
               />
               <input
                 type="text"
                 placeholder="Last Name"
                 name="NameLast"
                 value={formData.NameLast}
-                onChange={handleChange}
+                onChange={handleChange} required
               />
               <input
                 type="text"
                 placeholder="Username"
                 name="Username"
                 value={formData.Username}
-                onChange={handleChange}
+                onChange={handleChange} required
               />
               <div className="pass-input-div">
                 <input
@@ -83,7 +83,7 @@ const Registration = () => {
                   placeholder="Password"
                   name="Password"
                   value={formData.Password}
-                  onChange={handleChange}
+                  onChange={handleChange} required
                 />
                 {showPassword ? (
                   <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
@@ -95,15 +95,16 @@ const Registration = () => {
                 type="text"
                 placeholder="Phone Number"
                 name="PhoneNumber"
+                maxLength={10}
                 value={formData.PhoneNumber}
-                onChange={handleChange}
+                onChange={handleChange} required
               />
               <input
                 type="text"
                 placeholder="Address"
                 name="Address"
                 value={formData.Address}
-                onChange={handleChange}
+                onChange={handleChange} required
               />
               <div className="login-center-buttons">
                 <button type="submit">Sign Up</button>

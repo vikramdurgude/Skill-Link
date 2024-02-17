@@ -8,14 +8,14 @@ namespace BOL;
         public string PhoneNumber { get; set; }
         public string Skills { get; set; }
         public string Wages { get; set; }
-        public int Ratings { get; set; }
+        public float Rating { get; set; }
 
         public BookingList()
         {
             // Default constructor
         }
 
-        public BookingList(int userId,string username,string firstName, string lastName, string phoneNumber, string skills, string wages, int ratings)
+        public BookingList(int userId,string username,string firstName, string lastName, string phoneNumber, string skills, string wages, float ratings)
         {
             UserID = userId;
             Username=username;
@@ -24,11 +24,11 @@ namespace BOL;
             PhoneNumber = phoneNumber;
             Skills = skills;
             Wages = wages;
-            Ratings = ratings;
+            Rating = ratings;
         }
         public override string ToString()
         {
-            return $"UserID: {UserID}, Username: {Username}, NameFirst: {NameFirst}, NameLast: {NameLast}, PhoneNumber: {PhoneNumber}, Skills: {Skills}, Wages: {Wages}, Ratings: {Ratings}";
+            return $"UserID: {UserID}, Username: {Username}, NameFirst: {NameFirst}, NameLast: {NameLast}, PhoneNumber: {PhoneNumber}, Skills: {Skills}, Wages: {Wages}, Rating: {Rating}";
         }
 
     }

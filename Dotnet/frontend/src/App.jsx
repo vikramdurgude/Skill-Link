@@ -19,7 +19,8 @@ import ServiceRegistration from './components/serviceProviderRegistration';
 import ServiceForm from './components/Loginservices/ServiceForm';
 import ServiceTable from './components/ServiceProvider/ServiceTable';
 import BookedServices from './components/ServiceProvider/BookedServices';
-
+import ViewStatus from './components/ServiceProvider/ViewStatus';
+import GiveFeedback from './components/ServiceProvider/GiveFeedback';
 const App = () => {
 
 
@@ -49,7 +50,8 @@ const App = () => {
       <Route path="/ServiceProviderregister" element={<ServiceRegistration></ServiceRegistration>}/>
       <Route path="/data"   element={<ServiceTable/>}/>
       <Route path="/bookedservices"   element={<BookedServices/>}/>
-      
+      <Route path="/viewStatus"   element={<ViewStatus/>}/>
+      <Route path="/give-feedback" element={<GiveFeedback />} />
     </Routes>
     </BrowserRouter>
     </div>
