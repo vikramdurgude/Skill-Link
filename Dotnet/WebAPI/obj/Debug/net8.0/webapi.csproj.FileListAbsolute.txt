@@ -276,8 +276,6 @@ C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.Assem
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.csproj.CoreCompileInputs.cache
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.RazorAssemblyInfo.cache
-C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.RazorAssemblyInfo.cs
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.sourcelink.json
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\staticwebassets.development.json

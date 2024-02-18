@@ -59,27 +59,6 @@ public class ServiceProvider : Controller{
                 Console.WriteLine($"Error retrieving user requirements: {ex.Message}");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Failed to retrieve user requirements" });
             }
-        // int? serviceProviderID = HttpContext.Session.GetInt32("ServiceProviderID");
-
-        // if (serviceProviderID.HasValue){
-        //     try
-        //     {
-        //         List<UserRequirementWithUserData> userRequirements = ServiceProviderManager.GetUserRequirements(skills);
-        //         return Ok(userRequirements);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Log the exception
-        //         Console.WriteLine($"Error retrieving user requirements: {ex.Message}");
-        //         return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Failed to retrieve user requirements" });
-        //     }
-        // }
-        // else
-        // {
-        //     // Handle case where service provider is not logged in
-        //     return Unauthorized(new { message = "Service provider not logged in" });
-        // }
-     
         }
         [HttpGet("getStatus")]
         public IActionResult GetServiceProviderData(string serviceProviderUsername)

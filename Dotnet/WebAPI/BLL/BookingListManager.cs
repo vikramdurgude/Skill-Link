@@ -1,5 +1,4 @@
 namespace BLL;
-
 using BOL;
 using DAL;
 

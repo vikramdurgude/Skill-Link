@@ -67,21 +67,6 @@ public class User : Controller{
     public ActionResult AddUserRequirement([FromForm]int userID,[FromForm] string skills,[FromForm] string wages,[FromForm] string address,[FromForm] string date){
             // Retrieve the user ID from session
             Console.WriteLine("userID====>"+ userID);
-           
-            
-        /*int? userId = HttpContext.Session.GetInt32("UserID"); 
-        if (userId.HasValue){
-            // Call BLL method to add user requirement
-            Console.WriteLine("in user requirement"+" userId: "+userId.Value );
-            int insertedId = UserManager.AddUserRequirement(userId.Value, skills, wages, address, date);
-            // You can handle further logic or return a response as needed
-            return Ok(new { message = "User requirement added successfully", insertedId });
-        }
-        else{
-            // Handle case where user is not logged in or session expired
-            Console.WriteLine(userId);
-            return Unauthorized(new { message = "User not logged in" });
-        }*/
 
         if (userID > 0){
             // Call BLL method to add user requirement
@@ -97,8 +82,8 @@ public class User : Controller{
     }
     [HttpPost("giveFeedback")]
     public IActionResult GiveFeedback([FromBody] Feedback feedback){
-            UserManager.AddFeedback(feedback);
-            return Ok(new { message = "Feedback added successfully!" });
+        UserManager.AddFeedback(feedback);
+        return Ok(new { message = "Feedback added successfully!" });
     }
     
 

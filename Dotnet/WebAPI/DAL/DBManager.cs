@@ -6,10 +6,7 @@ using System.Collections.Generic;
 public class DBManager{
     
     public static string connString=@"server=localhost;port=3306;user=root;password=Sanket@01;database=project";
-    
-    
-   public static User IsUserPresent(string username, string password)
-        {
+    public static User IsUserPresent(string username, string password){
             try
             {
                 
@@ -70,8 +67,7 @@ public class DBManager{
 
 
 
-    public static bool RegisterUser(User userData)
-        {
+    public static bool RegisterUser(User userData){
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connString))
@@ -114,8 +110,7 @@ public class DBManager{
         }
 
 
-    public static int InsertUserRequirement(int userId, string skills, string wages, string address, string date)
-    {
+    public static int InsertUserRequirement(int userId, string skills, string wages, string address, string date){
         int insertedId = 0; 
         // Example using MySqlCommand (for MySQL):
         using (MySqlConnection conn = new MySqlConnection(connString))
