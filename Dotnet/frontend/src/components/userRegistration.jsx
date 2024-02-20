@@ -41,7 +41,7 @@ const Registration = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred. Please try again later.");
+      alert("User with same username is already existing");
     }
   };
 
@@ -61,14 +61,20 @@ const Registration = () => {
                 placeholder="First Name"
                 name="NameFirst"
                 value={formData.NameFirst}
-                onChange={handleChange} required
+                onChange={handleChange} 
+                title="Please enter only characters"
+                required
+                pattern="[A-Za-z]+"
               />
               <input
                 type="text"
                 placeholder="Last Name"
                 name="NameLast"
                 value={formData.NameLast}
-                onChange={handleChange} required
+                onChange={handleChange}
+                title="Please enter only characters"
+                required
+                pattern="[A-Za-z]+"
               />
               <input
                 type="text"
@@ -80,11 +86,13 @@ const Registration = () => {
               <div className="pass-input-div">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="Password (8-15 characters, 1 uppercase, 1 digit, 1 special character)"
                   name="Password"
                   value={formData.Password}
                   onChange={handleChange} required
-                />
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$"
+                  />
+                
                 {showPassword ? (
                   <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
                 ) : (
@@ -97,6 +105,7 @@ const Registration = () => {
                 name="PhoneNumber"
                 maxLength={10}
                 value={formData.PhoneNumber}
+                pattern="[6-9]{1}[0-9]{9}"
                 onChange={handleChange} required
               />
               <input
@@ -104,7 +113,10 @@ const Registration = () => {
                 placeholder="Address"
                 name="Address"
                 value={formData.Address}
-                onChange={handleChange} required
+                onChange={handleChange}
+                pattern="[A-Za-z]+"
+                title="Please enter only characters"
+                required
               />
               <div className="login-center-buttons">
                 <button type="submit">Sign Up</button>
@@ -118,5 +130,6 @@ const Registration = () => {
 };
 
 export default Registration;
+
 
 

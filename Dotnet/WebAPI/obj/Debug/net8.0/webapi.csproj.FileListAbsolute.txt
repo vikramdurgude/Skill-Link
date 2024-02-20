@@ -285,9 +285,9 @@ C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\staticwebass
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.webapi.props
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\scopedcss\bundle\webapi.styles.css
-C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.csproj.CopyComplete
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.dll
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\refint\webapi.dll
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.pdb
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.genruntimeconfig.cache
 C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\ref\webapi.dll
+C:\Users\user\OneDrive\Desktop\React Dotnet\WebAPI\obj\Debug\net8.0\webapi.csproj.Up2Date

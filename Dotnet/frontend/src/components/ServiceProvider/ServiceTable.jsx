@@ -1,16 +1,17 @@
 // import axios from "axios";
 // import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
+
 // export default function ServiceTable() {
 //   const [slist, setslist] = useState([]);
+//   const [acceptedServices, setAcceptedServices] = useState([]); // Store accepted service IDs
 //   const serviceProviderData = JSON.parse(
 //     localStorage.getItem("serviceProvider")
 //   );
+
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         console.log("service provider====>", serviceProviderData);
 //         const result = await axios.get(
 //           "http://localhost:5020/api/ServiceProvider/userrequirements?skills=" +
 //             serviceProviderData.skills
@@ -22,69 +23,92 @@
 //     };
 
 //     fetchData();
-//   }, []); // Empty dependency array ensures the effect runs only once on mount
+//   }, [serviceProviderData.skills]); 
 
-//   console.log("slist====>", slist);
-//   const userIDs = slist.map((item) => item.userID);
-//   console.log("userIDs====>", userIDs);
-//   console.log("serviceProviderdata////", serviceProviderData);
-//   const navigate = useNavigate();
-//   const acceptService = async () => {
+
+
+// const navigate = useNavigate();
+// const acceptService = async () => {
+// const userIDs = slist.map((ob) => ob.userID); // Get all userIDs from the fetched data
 //     try {
 //       await axios.post(
 //         "http://localhost:5020/api/BookingList/serviceProvider/bookingList",
 //         { userIDs, serviceProviderData }
 //       );
 //       // Handle success, maybe show a confirmation message
+//       setAcceptedServices(userIDs); // Mark all userIDs as accepted
 //     } catch (err) {
 //       console.log("Error accepting service:", err);
 //     }
 //   };
+//   const isAccepted = (userID) => {
+//     console.log("user id", userID);
+//     return acceptedServices.includes(userID);
+//   };
+
 //   const handleLogout = () => {
 //     sessionStorage.clear();
 //     navigate("/");
 //   };
+
 //   const viewStatus = () => {
 //     navigate("/viewStatus");
 //   };
+
 //   return (
 //     <div>
 //       <nav id="menu" className="navbar navbar-default navbar-fixed-top">
-//             <div className="container">
-//                 <div className="navbar-header">
-//                     <button
-//                         type="button"
-//                         className="navbar-toggle collapsed"
-//                         data-toggle="collapse"
-//                         data-target="#bs-example-navbar-collapse-1"
-//                     >
-//                         <span className="sr-only">Toggle navigation</span>
-//                         <span className="icon-bar"></span>
-//                         <span className="icon-bar"></span>
-//                         <span className="icon-bar"></span>
-//                     </button>
-//                     <a className="navbar-brand page-scroll" href="#page-top">
-//                         👤{serviceProviderData.username}
-//                     </a>
-//                 </div>
-//                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-//                     <ul className="nav navbar-nav navbar-right">
-//                         <li>
-//                             <a href="viewStatus" onClick={viewStatus} className="page-scroll">
-//                                 View Status
-//                             </a>
-//                         </li>
-//                         <li>
-//                             <a href="/" onClick={handleLogout}>
-//                                 LogOut
-//                             </a>
-//                         </li>
-//                     </ul>
-//                 </div>
-//             </div>
-//         </nav>
-//       <br/><br/><br/><br/><br/><br/>
-      
+//         <div className="container">
+//           <div className="navbar-header">
+//             <button
+//               type="button"
+//               className="navbar-toggle collapsed"
+//               data-toggle="collapse"
+//               data-target="#bs-example-navbar-collapse-1"
+//             >
+//               <span className="sr-only">Toggle navigation</span>
+//               <span className="icon-bar"></span>
+//               <span className="icon-bar"></span>
+//               <span className="icon-bar"></span>
+//             </button>
+//             <a className="navbar-brand page-scroll" href="#page-top">
+//               👤{serviceProviderData.username}
+//             </a>
+//           </div>
+//           <div
+//             className="collapse navbar-collapse"
+//             id="bs-example-navbar-collapse-1"
+//           >
+//             <ul className="nav navbar-nav navbar-right">
+//               <li>
+//                 <a
+//                   href="viewStatus"
+//                   onClick={viewStatus}
+//                   className="page-scroll"
+//                 >
+//                   View Status
+//                 </a>
+//               </li>
+//               <li>
+//                 <a href="/" onClick={handleLogout}>
+//                   LogOut
+//                 </a>
+//               </li>
+//             </ul>
+//           </div>
+//         </div>
+//       </nav>
+//       <br />
+//       <br />
+//       <br />
+//       <br />
+
+//       <center>
+//         <h3 className="text-center">
+//           List of users who are looking for : {serviceProviderData.skills}
+//         </h3>
+//       </center>
+//       <br />
 //       <table className="table table-striped">
 //         <thead>
 //           <tr>
@@ -107,9 +131,16 @@
 //               <td>{ob.skills}</td>
 //               <td>{ob.wages}</td>
 //               <td>{ob.address}</td>
-//               <td>{ob.date}</td>
+//               <td>{ob.date.split(" ")[0]}</td>
 //               <td>
-//             <button type="button" className="btn btn-primary" onClick={acceptService}>accept</button>
+//                 <button
+//                   type="button"
+//                   className="btn btn-primary"
+//                   onClick={acceptService}
+//                   disabled={isAccepted(ob.userID)} 
+//                 >
+//                   {isAccepted(ob.userID) ? "Accepted" : "Accept"}
+//                 </button>
 //                 &nbsp;&nbsp;&nbsp;
 //               </td>
 //             </tr>
@@ -126,8 +157,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function ServiceTable() {
   const [slist, setslist] = useState([]);
-  const [acceptedServices, setAcceptedServices] = useState([]); // Store accepted service IDs
-  const serviceProviderData = JSON.parse(localStorage.getItem("serviceProvider"));
+  const [selectedServices, setSelectedServices] = useState([]); // Store selected service IDs
+  const serviceProviderData = JSON.parse(
+    localStorage.getItem("serviceProvider")
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -143,26 +176,30 @@ export default function ServiceTable() {
     };
 
     fetchData();
-  }, [serviceProviderData.skills]); // Trigger effect when service provider data changes
+  }, [serviceProviderData.skills]); 
 
   const navigate = useNavigate();
 
-  const acceptService = async () => {
-    const userIDs = slist.map((ob) => ob.userID); // Get all userIDs from the fetched data
-    try {
-      await axios.post(
-        "http://localhost:5020/api/BookingList/serviceProvider/bookingList",
-        { userIDs, serviceProviderData }
-      );
-      // Handle success, maybe show a confirmation message
-      setAcceptedServices(userIDs); // Mark all userIDs as accepted
-    } catch (err) {
-      console.log("Error accepting service:", err);
+  const handleCheckboxChange = (event, userID) => {
+    if (event.target.checked) {
+      setSelectedServices(prevState => [...prevState, userID]);
+    } else {
+      setSelectedServices(prevState => prevState.filter(id => id !== userID));
     }
   };
 
-  const isAccepted = (userID) => {
-    return acceptedServices.includes(userID);
+  const handleConfirm = async () => {
+    try {
+      await axios.post(
+        "http://localhost:5020/api/BookingList/serviceProvider/bookingList",
+        { userIDs: selectedServices, serviceProviderData }
+      );
+      // Handle success, maybe show a confirmation message
+      console.log("Services accepted:", selectedServices);
+      setSelectedServices([]); // Clear selected services after confirmation
+    } catch (err) {
+      console.log("Error accepting services:", err);
+    }
   };
 
   const handleLogout = () => {
@@ -177,43 +214,57 @@ export default function ServiceTable() {
   return (
     <div>
       <nav id="menu" className="navbar navbar-default navbar-fixed-top">
-      
-          <div className="container">
-               <div className="navbar-header">
-                   <button
-                        type="button"
-                        className="navbar-toggle collapsed"
-                        data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1"
-                    >
-                        <span className="sr-only">Toggle navigation</span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                    </button>
-                    <a className="navbar-brand page-scroll" href="#page-top">
-                        👤{serviceProviderData.username}
-                    </a>
-                </div>
-                <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul className="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="viewStatus" onClick={viewStatus} className="page-scroll">
-                                View Status
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/" onClick={handleLogout}>
-                                LogOut
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+        <div className="container">
+          <div className="navbar-header">
+            <button
+              type="button"
+              className="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#bs-example-navbar-collapse-1"
+            >
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+            <a className="navbar-brand page-scroll" href="#page-top">
+              👤{serviceProviderData.username}
+            </a>
+          </div>
+          <div
+            className="collapse navbar-collapse"
+            id="bs-example-navbar-collapse-1"
+          >
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <a
+                  href="viewStatus"
+                  onClick={viewStatus}
+                  className="page-scroll"
+                >
+                  View Status
+                </a>
+              </li>
+              <li>
+                <a href="/" onClick={handleLogout}>
+                  LogOut
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
-      <br/><br/><br/><br/><br/><br/>
-      
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <center>
+        <h3 className="text-center">
+          List of users who are looking for: {serviceProviderData.skills}
+        </h3>
+      </center>
+      <br />
       <table className="table table-striped">
         <thead>
           <tr>
@@ -224,7 +275,7 @@ export default function ServiceTable() {
             <th scope="col">Wages</th>
             <th scope="col">Address</th>
             <th scope="col">Date</th>
-            <th>action</th>
+            <th>Select</th>
           </tr>
         </thead>
         <tbody>
@@ -236,22 +287,30 @@ export default function ServiceTable() {
               <td>{ob.skills}</td>
               <td>{ob.wages}</td>
               <td>{ob.address}</td>
-              <td>{ob.date}</td>
+              <td>{ob.date.split(" ")[0]}</td>
               <td>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={acceptService}
-                  disabled={isAccepted(ob.userID)} // Disable button if service is already accepted
-                >
-                  {isAccepted(ob.userID) ? "Accepted" : "Accept"}
-                </button>
-                &nbsp;&nbsp;&nbsp;
+                <input
+                  type="checkbox"
+                  checked={selectedServices.includes(ob.userID)}
+                  onChange={(e) => handleCheckboxChange(e, ob.userID)}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="text-center">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleConfirm}
+          disabled={selectedServices.length === 0}
+        >
+          Confirm
+        </button>
+      </div>
     </div>
   );
 }
+
+

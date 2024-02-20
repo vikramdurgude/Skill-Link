@@ -39,7 +39,7 @@ namespace WebAPI.Controllers;
         public IActionResult AddIntoBookingList([FromBody] BookingListViewModel model){
 
             foreach (int userId in model.UserIDs){
-                    
+                    Console.WriteLine("UserID's  in array "+ userId);
                 BookingListManager.AddIntoBookingList(userId, model.serviceProviderData);
                     
             }
