@@ -489,11 +489,12 @@ public class DBManager{
         {
             using (MySqlConnection connection = new MySqlConnection(connString))
             {
-                string query = @"INSERT INTO Feedback (ServiceProviderUsername, FeedbackMessage, Rating) 
-                                 VALUES (@ServiceProviderUsername, @FeedbackMessage, @Rating)";
+                string query = @"INSERT INTO Feedback (Username,ServiceProviderUsername, FeedbackMessage, Rating) 
+                                 VALUES (@Username,@ServiceProviderUsername, @FeedbackMessage, @Rating)";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@Username", feedback.Username);
                     command.Parameters.AddWithValue("@ServiceProviderUsername", feedback.ServiceProviderUsername);
                     command.Parameters.AddWithValue("@FeedbackMessage", feedback.FeedbackMessage);
                     command.Parameters.AddWithValue("@Rating", feedback.Rating);
@@ -512,4 +513,44 @@ public class DBManager{
                 }
             }
         }
+
+
+    public static List<Feedback> GetFeedbacksByServiceProvider(string serviceProviderUsername){
+            List<Feedback> feedbacks = new List<Feedback>();
+
+            using (MySqlConnection connection = new MySqlConnection(connString))
+            {
+                string query = "SELECT * FROM Feedback WHERE ServiceProviderUsername = @ServiceProviderUsername";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ServiceProviderUsername", serviceProviderUsername);
+
+                    try
+                    {
+                        connection.Open();
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Feedback feedback = new Feedback();
+                                feedback.Username = reader["Username"].ToString();
+                                feedback.ServiceProviderUsername = reader["ServiceProviderUsername"].ToString();
+                                feedback.FeedbackMessage = reader["FeedbackMessage"].ToString();
+                                feedback.Rating = Convert.ToSingle(reader["Rating"]);
+                                feedbacks.Add(feedback);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the exception
+                        throw new Exception("Error getting feedbacks: " + ex.Message);
+                    }
+                }
+            }
+
+            return feedbacks;
+        }
+
 }

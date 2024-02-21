@@ -21,6 +21,7 @@ import BookedServices from './components/ServiceProvider/BookedServices';
 import ViewStatus from './components/ServiceProvider/ViewStatus';
 import GiveFeedback from './components/ServiceProvider/GiveFeedback';
 import ServiceLogin from './components/serviceProviderLogin';
+import ViewFeedback from './components/ServiceProvider/ViewFeedback';
 const App = () => {
 
 
@@ -51,6 +52,7 @@ const App = () => {
       <Route path="/data"   element={<ServiceTable/>}/>
       <Route path="/bookedservices"   element={<BookedServices/>}/>
       <Route path="/viewStatus"   element={<ViewStatus/>}/>
+      <Route path="/viewFeedback"   element={<ViewFeedback/>}/>
       <Route path="/give-feedback" element={<GiveFeedback />} />
     </Routes>
     </BrowserRouter>

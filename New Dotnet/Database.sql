@@ -41,6 +41,7 @@ CREATE TABLE UserRequirements (
 );
 
 CREATE TABLE Feedback (
+	Username VARCHAR(50),
     ServiceProviderUsername VARCHAR(50) NOT NULL,
     FeedbackMessage TEXT NOT NULL,
     Rating INT NOT NULL,
@@ -109,7 +110,7 @@ VALUES
 
 
 -- Insert some dummy values into the Feedback table
-INSERT INTO Feedback (ServiceProviderUsername, FeedbackMessage, Rating)
+INSERT INTO Feedback (Username,ServiceProviderUsername, FeedbackMessage, Rating)
 VALUES 
-('alice_johnson', 'Excellent service!', 5),
-('bob_brown', 'Good job overall.', 4);
+('john_doe','alice_johnson', 'Excellent service!', 5),
+('jane_smith','bob_brown', 'Good job overall.', 4);

@@ -21,4 +21,7 @@ public static class ServiceProviderManager{
     public static List<ServiceProviderViewStatus> GetServiceProviderData(string serviceProviderUsername){
         return DBManager.GetServiceProviderData(serviceProviderUsername);
     }
+    public static List<Feedback> GetFeedbacksByServiceProvider(string serviceProviderUsername){
+        return DBManager.GetFeedbacksByServiceProvider(serviceProviderUsername);
+    }
 }

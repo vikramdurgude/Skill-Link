@@ -75,6 +75,13 @@ public class ServiceProvider : Controller{
             }
         }
     
+
+        [HttpGet("getFeedback")]
+        public IActionResult GetFeedbacksByServiceProvider(string serviceProviderUsername)
+        {
+            List<Feedback> feedbacks = ServiceProviderManager.GetFeedbacksByServiceProvider(serviceProviderUsername);
+            return Ok(feedbacks);
+        }
 }
 
 

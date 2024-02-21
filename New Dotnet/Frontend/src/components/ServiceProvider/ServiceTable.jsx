@@ -393,6 +393,9 @@ console.log("Selected Services",selectedServices);
   const viewStatus = () => {
     navigate("/viewStatus");
   };
+  const viewFeedback = () => {
+    navigate("/viewFeedback");
+  };
 
   return (
     <div>
@@ -426,6 +429,15 @@ console.log("Selected Services",selectedServices);
                   className="page-scroll"
                 >
                   View Status
+                </a>
+              </li>
+              <li>
+                <a
+                  href="viewFeedback"
+                  onClick={viewFeedback}
+                  className="page-scroll"
+                >
+                  View Feedback
                 </a>
               </li>
               <li>
