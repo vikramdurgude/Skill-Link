@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 public class DBManager{
     
-    public static string connString=@"server=localhost;port=3306;user=root;password=Sanket@01;database=project";
+    public static string connString=@"server=localhost;port=3306;user=root;password=root;database=project";
     public static User IsUserPresent(string username, string password){
             try
             {
@@ -552,5 +552,163 @@ public class DBManager{
 
             return feedbacks;
         }
+
+
+ public static bool UpdateUser(User userData)
+{
+    Console.WriteLine("inside DB");
+
+    try
+    {
+        using (MySqlConnection conn = new MySqlConnection(connString))
+        {
+            conn.Open();
+
+            string updateQuery = "UPDATE Users SET NameFirst=@NameFirst, NameLast=@NameLast, Password=@Password, PhoneNumber=@PhoneNumber, Address=@Address WHERE Username=@Username";
+
+            using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@NameFirst", userData.NameFirst);
+                cmd.Parameters.AddWithValue("@NameLast", userData.NameLast);
+                cmd.Parameters.AddWithValue("@Username", userData.Username);
+                cmd.Parameters.AddWithValue("@Password", userData.Password);
+                cmd.Parameters.AddWithValue("@PhoneNumber", userData.PhoneNumber);
+                cmd.Parameters.AddWithValue("@Address", userData.Address);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                return rowsAffected > 0;
+            }
+        }
+    }
+    catch (MySqlException ex)
+    {
+        Console.WriteLine("MySQL Error: " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error : " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+}
+// User forgot password
+public static bool ChangePassword(string Username,string Password){
+
+    try{
+        using(MySqlConnection conn=new MySqlConnection(connString)){
+            conn.Open();
+            string ChangeQuery =@"update users set password=@password where username=@username";
+
+
+
+            using(MySqlCommand cmd =new MySqlCommand(ChangeQuery,conn))
+            {
+                cmd.Parameters.AddWithValue("@password",Password);
+                cmd.Parameters.AddWithValue("@username",Username);
+                int rowsAffected=cmd.ExecuteNonQuery();
+                return rowsAffected>0;
+            }
+
+        }
+    }  
+    
+    catch (MySqlException ex)
+    {
+        Console.WriteLine("MySQL Error: " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error : " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+
+}
+
+
+
+
+
+
+public static bool UpdateService(BOL.ServiceProvider ServiceuserData)
+{
+    Console.WriteLine("inside DB");
+
+    try
+    {
+        using (MySqlConnection conn = new MySqlConnection(connString))
+        {
+            conn.Open();
+
+            string updateQuery = "UPDATE serviceproviders SET NameFirst=@NameFirst, NameLast=@NameLast, Password=@Password, PhoneNumber=@PhoneNumber, Address=@Address WHERE Username=@Username";
+
+            using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@NameFirst", ServiceuserData.NameFirst);
+                cmd.Parameters.AddWithValue("@NameLast", ServiceuserData.NameLast);
+                cmd.Parameters.AddWithValue("@Username", ServiceuserData.Username);
+                cmd.Parameters.AddWithValue("@Password", ServiceuserData.Password);
+                cmd.Parameters.AddWithValue("@PhoneNumber", ServiceuserData.PhoneNumber);
+                cmd.Parameters.AddWithValue("@Address", ServiceuserData.Address);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                return rowsAffected > 0;
+            }
+        }
+    }
+    catch (MySqlException ex)
+    {
+        Console.WriteLine("MySQL Error: " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error : " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+}
+
+public static bool ServiceChangePassword(string Username,string Password){
+
+    try{
+        using(MySqlConnection conn=new MySqlConnection(connString)){
+            conn.Open();
+            string ChangeQuery =@"update serviceproviders set password=@password where username=@username";
+
+
+
+            using(MySqlCommand cmd =new MySqlCommand(ChangeQuery,conn))
+            {
+                cmd.Parameters.AddWithValue("@password",Password);
+                cmd.Parameters.AddWithValue("@username",Username);
+                int rowsAffected=cmd.ExecuteNonQuery();
+                return rowsAffected>0;
+            }
+
+        }
+    }  
+    
+    catch (MySqlException ex)
+    {
+        Console.WriteLine("MySQL Error: " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error : " + ex.Message);
+        // Log the exception or handle it as needed
+        return false;
+    }
+
+}
 
 }

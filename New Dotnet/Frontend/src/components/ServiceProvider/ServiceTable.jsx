@@ -396,6 +396,9 @@ console.log("Selected Services",selectedServices);
   const viewFeedback = () => {
     navigate("/viewFeedback");
   };
+  const ServiceProviderupdate = () => {
+    navigate("/ServiceProviderupdate");
+  };
 
   return (
     <div>
@@ -422,6 +425,15 @@ console.log("Selected Services",selectedServices);
             id="bs-example-navbar-collapse-1"
           >
             <ul className="nav navbar-nav navbar-right">
+            <li>
+                <a
+                  href="ServiceProviderupdate"
+                  onClick={ServiceProviderupdate}
+                  className="page-scroll"
+                >
+                  Update Profile
+                </a>
+              </li>
               <li>
                 <a
                   href="viewStatus"

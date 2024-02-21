@@ -24,4 +24,11 @@ public static class ServiceProviderManager{
     public static List<Feedback> GetFeedbacksByServiceProvider(string serviceProviderUsername){
         return DBManager.GetFeedbacksByServiceProvider(serviceProviderUsername);
     }
+     public static bool UpdateService(ServiceProvider serviceProvider){
+        return DBManager.UpdateService(serviceProvider);
+
+    }
+    public static bool ChangePassword(string Username,string Password){
+        return DBManager.ServiceChangePassword(Username,Password);
+    }
 }

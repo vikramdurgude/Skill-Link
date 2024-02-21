@@ -82,6 +82,43 @@ public class ServiceProvider : Controller{
             List<Feedback> feedbacks = ServiceProviderManager.GetFeedbacksByServiceProvider(serviceProviderUsername);
             return Ok(feedbacks);
         }
+
+
+        
+[HttpPost("ServiceUpdate")]
+public IActionResult ServiceUpdate([FromBody] BOL.ServiceProvider serviceData){
+    Console.WriteLine("Inside Update");
+    bool updateStatus=ServiceProviderManager.UpdateService(serviceData);
+    if(updateStatus){
+        return Ok(new{ message="serviceProvider updated"});
+    }
+    else{
+         return BadRequest(new { message = "Failed to failed ServicePRovider" });
+    }
+}
+     
+
+
+
+
+
+[HttpPost("ServiceforgotPassword")]  // Consider a more meaningful route
+public IActionResult ForgotPassword([FromForm] string Username, [FromForm] string Password)
+{
+    Console.WriteLine("service Forgot " + Username + Password);
+
+    // Assuming UserManager.ChangePassword is your method for handling password change
+    bool changePass = ServiceProviderManager.ChangePassword(Username, Password);
+
+    if (changePass)
+    {
+        return Ok(new { message = "Password Changed" });
+    }
+    else
+    {
+        return Unauthorized(new { message = "Invalid Credentials" });
+    }
+}
 }
 
 

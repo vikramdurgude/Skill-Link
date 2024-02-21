@@ -32,5 +32,17 @@ namespace BOL
             Wages = wages;
             Address = address;
         }
+         public ServiceProvider( string nameFirst, string nameLast, string username, string password, string phoneNumber, string skills, string wages, string address)
+        {
+           
+            NameFirst = nameFirst;
+            NameLast = nameLast;
+            Username = username;
+            Password = password;
+            PhoneNumber = phoneNumber;
+            Skills = skills;
+            Wages = wages;
+            Address = address;
+        }
     }
 }

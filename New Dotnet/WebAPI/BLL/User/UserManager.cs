@@ -19,4 +19,11 @@ public static class UserManager{
         return DBManager.GiveFeedback(feedback);
     }
 
+      public static bool UpdateUser(User userData ){
+        return DBManager.UpdateUser(userData);
+    }
+
+    public static bool ChangePassword(string Username,string Password){
+        return DBManager.ChangePassword(Username,Password);
+    }
 }

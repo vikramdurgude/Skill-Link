@@ -87,4 +87,42 @@ public class User : Controller{
     }
     
 
+    [HttpPost("update")]
+    public IActionResult UpdateUser([FromBody] BOL.User userData){
+
+        Console.WriteLine(userData.ToString());
+        bool updateSuccess = UserManager.UpdateUser(userData);
+        if (updateSuccess)
+        {
+            return Ok(new { message = "User update successfully!" });
+        }
+        else
+        {
+            return BadRequest(new { message = "Failed to failed user" });
+        }
+    }
+
+
+
+
+
+
+[HttpPost("forgotPassword")]  // Consider a more meaningful route
+public IActionResult ForgotPassword([FromForm] string Username, [FromForm] string Password)
+{
+    Console.WriteLine("User  login" + Username + Password);
+
+    // Assuming UserManager.ChangePassword is your method for handling password change
+    bool changePass = UserManager.ChangePassword(Username, Password);
+
+    if (changePass)
+    {
+        return Ok(new { message = "Password Changed" });
+    }
+    else
+    {
+        return Unauthorized(new { message = "Invalid Credentials" });
+    }
+}
+
 }
